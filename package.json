@@ -18,6 +18,7 @@
   "homepage": "https://github.com/KristenHickey/Pharsee_take_home_test#readme",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
     "express": "^4.17.3"
   }
 }

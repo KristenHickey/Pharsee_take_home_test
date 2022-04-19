@@ -6,11 +6,12 @@ const cors = require('cors');
 
 const router = require('./router');
 
+
 app.use(cors());
 app.use(express.json());
 app.use(router);
 
-( function () {
+(function () {
   app.listen(PORT, () => {
     console.log('Server running on port', PORT)
   })
