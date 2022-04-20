@@ -1,6 +1,6 @@
 import { findAllNotifications, saveNewPost, findAndUpdate } from './models.js';
 
-export async function getNotifications(req, res) {
+export function getNotifications(req, res) {
   try {
     const postId = req.params.id;
     const notifications = findAllNotifications()
