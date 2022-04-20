@@ -1,28 +1,30 @@
-// const db = require('./db')
-const {findAllNotifications, saveNewPost, findAndUpdate}= require('./models');
-const fs = require('fs')
+import { findAllNotifications, saveNewPost, findAndUpdate } from './models.js';
 
-async function getNotifications(req, res) {
+export async function getNotifications(req, res) {
   try {
     const postId = req.params.id;
     const notifications = findAllNotifications()
-    const likes = notifications.filter(notification => {
+
+    const response = notifications.reduce((accumulator, notification) => {
+      console.log(postId)
       if (notification.post.id === postId && notification.type === "Like") {
-        return notification
+     accumulator.likes.push(notification)
       }
-    })
-    const comments = notifications.filter(notification => {
-      if (notification.post.id === postId && notification.type === "Comment") {
-        return notification
+       if (notification.post.id === postId && notification.type === "Comment") {
+    accumulator.comments.push(notification)
+    }
+      return accumulator
+    }, {postId,
+      likes: [],
+      comments: [],
       }
-    })
+    )
+
     res.status(200)
     res.send({
-      postId,
-      totalLikes: likes.length,
-      likes,
-      totalComments: comments.length,
-      comments
+      ...response,
+      totalLikes: response.likes.length,
+      totalComments: response.comments.length,
     })
   } catch (error) {
     res.status(500)
@@ -30,30 +32,22 @@ async function getNotifications(req, res) {
   }
 }
 
- async function postNotification(req, res) {
+ export async function postNotification(req, res) {
   try {
  const newPost = req.body
-//     fs.readFile('db', function (err, data) {
-//       const json = JSON.parse(data)
-//       json.push(newPost)
-//       fs.writeFile("db", JSON.stringify(json))
-//     })
-//     // console.log(req.body)
-//     // db.property = [...db, newPost]
-//     // console.log(db)
+ await saveNewPost(newPost)
  res.status(204)
  res.send()
-saveNewPost(newPost)
  } catch (error) {
   res.status(500)
   res.send({error})
  }
 }
 
-async function updateStatus(req, res) {
+export async function updateStatus(req, res) {
   try {
     const postId = req.params.id
-    findAndUpdate(postId)
+    await findAndUpdate(postId)
     res.status(204)
     res.send()
   } catch (error) {
@@ -61,5 +55,3 @@ async function updateStatus(req, res) {
     res.send({error})
   }
 }
-
-module.exports = {getNotifications, postNotification, updateStatus}

@@ -1,22 +1,21 @@
-const { db } = require('./db')
+import { db, writeToJSON } from "./db.js";
 
-function findAllNotifications() {
-  // return new Promise((resolve, reject) => {
-  //   resolve (db.msgs)
-  // })
+export function findAllNotifications() {
   return db.notifications;
 }
-function saveNewPost(notification) {
+
+export function saveNewPost(notification) {
   db.notifications.push(notification);
+  writeToJSON()
   return notification;
 }
 
-function findAndUpdate(id) {
+export function findAndUpdate(id) {
   const notifications = db.notifications
-  for (let i = 0; i < notifications.length; i++){
-    if (notifications[i].post.id === id) {
-      notifications[i].read = true;
+  notifications.forEach(notification => {
+    if (notification.post.id === id) {
+      notification.read = true;
     }
-  }
+  })
+  writeToJSON()
 }
-module.exports = {findAllNotifications, saveNewPost, findAndUpdate}

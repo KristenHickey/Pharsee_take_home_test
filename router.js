@@ -1,10 +1,13 @@
-const { Router } = require('express');
+import { Router } from 'express';
 const router = Router()
 
-const controllers = require('./controllers')
+import { getNotifications, postNotification, updateStatus } from './controllers.js';
 
-router.get('/notifications/:id', controllers.getNotifications)
-router.post('/newNotification', controllers.postNotification)
-router.patch('/updateStatus/:id', controllers.updateStatus)
+router.get('/notifications/:id', getNotifications)
+router.post('/newNotification', postNotification)
+router.patch('/updateStatus/:id', updateStatus)
 
-module.exports = router;
+export default router;
+
+
+// fill out readme
