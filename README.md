@@ -2,6 +2,12 @@
 
 Thank you for giving me the opportunity to show you what I can do with your take home test, I was able to complete this within the specified 4 hours.
 
+### Assumptions
+I did make several assumptions about this project as I found the description a bit vague, obviously if this were a real production I would clarify my assumptions before starting work.
+1. The front end does not require a copy of the object made/updated on the back end following a POST or PATCH request. If the backend were working wiht a database I would usually send back a copy of what had been created/updated in the response so the frount has the ability to make use of additional info from the backend such as the ID created by the database, or timestamps created etc. 
+2. The third end point was intended to update the 'read' status for all notifications of a given post.
+3. What data/the sturcture of the data to be included in the response from the GET request. 
+
 ## Getting started
 
 In order to run my test you will need npm and Node.
